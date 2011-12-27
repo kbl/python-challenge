@@ -5,7 +5,4 @@ obj = pickle.load(file)
 file.close()
 
 for row in obj:
-    string = ''
-    for (sign, count) in row:
-        string += sign * count
-    print string
+    print "".join(map(lambda (sign, count): sign * count, row))
