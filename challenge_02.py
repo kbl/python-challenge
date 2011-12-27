@@ -14,7 +14,13 @@ def next_char(char, step = 2):
         ')'
     """
     if re.match('[a-z]', char):
-        return chr(ord(char) + 2)
+        a = ord('a')
+        z = ord('z')
+        new_char = ord(char) + 2
+        if new_char > z: 
+            return chr(new_char % z + a - 1)
+        else:
+            return chr(new_char)
 
     return char
 
