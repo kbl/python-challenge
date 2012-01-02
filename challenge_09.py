@@ -1,3 +1,5 @@
+from plplot import *
+
 # first+second=?
 
 first = '''
@@ -29,20 +31,23 @@ second = '''
 158,121,157,128,156,134,157,136,156,136
 '''
 
-def test(x):
-    if x < 257:
-        print x, chr(x)
-        return chr(x)
-    return x
+def pairs(collection):
+    prev = None
+    for item in collection:
+        if prev:
+            yield prev, item
+        prev = item
 
-f_array = map(test, [int(x) for x in first.split(',')])
-s_array = [int(x) for x in second.split(',')]
+f = [int(x) for x in first.split(',')]
+s = [int(x) for x in second.split(',')]
 
-print '-----------------'
-print f_array
-print '-----------------'
-print s_array
-print '-----------------'
-print f_array + s_array
-print '-----------------'
-print map(test, s_array)
+z = zip(f, s)
+f1, s1 = zip(*z)
+
+plinit()
+plenv(100, 450, 50, 250, 1, 0)
+
+#plpoin(f1, s1, len(f1))
+plline(f1, s1)
+
+plend()
