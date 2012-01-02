@@ -43,6 +43,8 @@ for i in range(30):
 
 print len(a[30])
 
+# 5808
+
 if __name__ == '__main__':
     import doctest
     doctest.testmod()
