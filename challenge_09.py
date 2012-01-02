@@ -31,23 +31,15 @@ second = '''
 158,121,157,128,156,134,157,136,156,136
 '''
 
-def pairs(collection):
-    prev = None
-    for item in collection:
-        if prev:
-            yield prev, item
-        prev = item
-
 f = [int(x) for x in first.split(',')]
 s = [int(x) for x in second.split(',')]
 
-z = zip(f, s)
-f1, s1 = zip(*z)
-
 plinit()
-plenv(100, 450, 50, 250, 1, 0)
+plenv(0, 500, 0, 500, 1, 0)
 
-#plpoin(f1, s1, len(f1))
-plline(f1, s1)
+plline(f[0::2], f[1::2])
+plline(s[0::2], s[1::2])
 
 plend()
+
+# bull (:
