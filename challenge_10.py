@@ -1,16 +1,49 @@
+#       1  2   2   4     6
 # a  = [1, 11, 21, 1211, 111221, 
-#       1   4   7  49    376
+#       1  4   7   49    376
 # len(a[30]) = ?
 
-def convert(number):
-    base = 3
-    exponent = 0
-    value = 0
-    for char in str(number)[::-1]:
-        value += base ** exponent * int(char)
-        print base, exponent, int(char), value
-        exponent += 1
+def encode(value):
+    '''
+    >>> encode('1211')
+    '111221'
+    >>> encode('111221')
+    '312211'
+    '''
 
-    return value
+    previous = None
+    count = 0
+    encoded = ''
 
-print '111221 = ', convert('111221')
+    def encode_char():
+        return str(count) + str(previous)
+
+    for char in value:
+        if previous == None:
+            count = 1
+            previous = char
+            continue
+        if char == previous:
+            count += 1
+        else:
+            encoded += encode_char()
+
+            count = 1
+            previous = char
+
+    encoded += encode_char()
+        
+    return encoded
+
+a = ['1']
+
+for i in range(30):
+    current = a[i]
+    a.append(encode(current))
+
+print len(a[30])
+
+if __name__ == '__main__':
+    import doctest
+    doctest.testmod()
+
