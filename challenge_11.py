@@ -1,12 +1,27 @@
-import Image
+import Image, re
 
 picture = Image.open('challenge_11.jpg')
-x = picture.convert('CMYK')
+length, height = picture.size
+new_size = (length / 2, height / 2)
 
-x.load()
-result1, result2, result3, result4 = x.split()
+odd_odd = []
+odd_even = []
+even_odd = []
+even_even = []
 
-result1.save('challenge_11_result_1.jpg')
-result2.save('challenge_11_result_2.jpg')
-result3.save('challenge_11_result_3.jpg')
-result4.save('challenge_11_result_4.jpg')
+def even(x):
+    return x % 2 == 0 and 'even' or 'odd'
+
+def save_image(data, name):
+    image = Image.new('RGB', new_size)
+    image.putdata(data)
+    image.save(name)
+
+for x in xrange(length):
+    for y in xrange(height):
+        where = '%s_%s' % (even(x), even(y))
+        locals()[where].append(picture.getpixel((x, y)))
+
+for name in ['odd_odd', 'odd_even', 'even_odd', 'even_even']:
+    save_image(locals()[name], name + '.jpg')
+
