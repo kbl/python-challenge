@@ -2,26 +2,28 @@ import Image, re
 
 picture = Image.open('challenge_12.jpg')
 length, height = picture.size
-new_size = (length / 2, height)
 
-images = {'image1': [], 'image2': []}
-
-def even(x):
-    return x % 2 == 0 and 'image1' or 'image2'
+new_image = []
 
 def save_image(data, name):
-    image = Image.new('RGB', new_size)
-    image.putdata(data)
+    # image = Image.new('RGB', picture.size)
+    # image.putdata(data)
+    image = Image.fromstring('RGB', (640, 480), data)
     image.save(name)
 
-for x in xrange(length):
-    lines = { 'image1': [], 'image2': [] }
-    for y in xrange(height):
-        lines[even(x)].append(picture.getpixel((x, y)))
-    print len(lines)
-    for name, line in lines.values():
-        images[name].append(line)
 
-for name, image in images.values():
-    save_image(image, name + '.jpg')
+for x in xrange(length):
+    for y in xrange(height):
+        pixel = picture.getpixel((x, y))
+        try:
+            row = new_image[y]
+        except IndexError:
+            row = []
+            new_image.append(row)
+        row.append(pixel)
+
+print len(new_image)
+print len(new_image[0])
+
+save_image(new_image, 'test.jpg')
 
