@@ -1,12 +1,11 @@
-import Image, re
+from itertools import cycle
 
-picture = Image.open('challenge_12.jpg')
-length, height = picture.size
+files = [open('result_%s.jpg' % str(i + 1), 'w') for i in xrange(5)]
+index = cycle(range(5))
 
-new_image = []
+with open('challenge_12.gfx') as f:
+    for x in f:
+        files[index.next()].write(x)
 
-modified = picture.transform(picture.size, 
-                             Image.AFFINE, 
-                             (1, 0, 0, 0, 1, -3))
-modified.show()
-
+for f in files:
+    f.close()
